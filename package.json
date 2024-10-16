@@ -1,0 +1,34 @@
+{
+  "name": "roblox-ts-script",
+  "author": "Snipcola",
+  "version": "0.0.1",
+  "keywords": [
+    "roblox",
+    "typescript",
+    "lua",
+    "luau",
+    "roblox-ts",
+    "rbxts",
+    "bundle"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://git.snipcola.com/snipcola/Roblox-TS-Script.git"
+  },
+  "main": "src/index.js",
+  "bin": {
+    "roblox-ts-script": "src/index.js"
+  },
+  "files": [
+    "src"
+  ],
+  "dependencies": {
+    "chokidar": "4.0.1",
+    "colorette": "2.0.20",
+    "lookpath": "1.2.2",
+    "roblox-ts": "3.0.0",
+    "semver": "7.6.3",
+    "yocto-spinner": "0.1.0"
+  }
+}
