@@ -1,7 +1,8 @@
 {
   "name": "roblox-ts-script",
   "author": "Snipcola",
-  "version": "0.0.1",
+  "description": "Dependency of projects using Create-Roblox-TS-Script.",
+  "version": "0.0.2",
   "keywords": [
     "roblox",
     "typescript",
