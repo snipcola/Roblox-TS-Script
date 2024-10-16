@@ -5,5 +5,6 @@ Dependency of projects using [Create-Roblox-TS-Script](https://git.snipcola.com/
 ## Credits
 
 - [roblox-ts](https://github.com/roblox-ts/roblox-ts), compiler
+- [rojo](https://github.com/rojo-rbx/rojo), synchronization
 - [tape](https://github.com/Belkworks/tape), bundler (heavily modified)
 - [darklua](https://github.com/seaofvoices/darklua), minifier
