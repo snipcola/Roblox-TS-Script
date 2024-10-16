@@ -80,6 +80,18 @@ function hasArgs(remove, ...args) {
   return found;
 }
 
+async function readJSONFile(path) {
+  try {
+    const contents = await fs.readFile(path, "utf8");
+    return JSON.parse(contents);
+  } catch {}
+}
+
+async function writeJSONFile(path, json) {
+  json = `${JSON.stringify(json, null, 2)}\n`;
+  await fs.writeFile(path, json, "utf8");
+}
+
 module.exports = {
   measure,
   executeCommand,
@@ -88,4 +100,6 @@ module.exports = {
   success,
   error,
   hasArgs,
+  readJSONFile,
+  writeJSONFile,
 };
