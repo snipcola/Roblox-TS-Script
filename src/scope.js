@@ -17,8 +17,8 @@ async function main(root) {
   const npmRegex = /^(@[a-z0-9-~][a-z0-9-._~]*\/)?[a-z0-9-~][a-z0-9-._~]*$/;
 
   function scopeValidation(value) {
-    if (value.startsWith("@")) value = value.replace("@", "");
     if (!value) return "Scope cannot be empty.";
+    if (value.startsWith("@")) value = value.replace("@", "");
     if (!npmRegex.test(value)) return "Scope is formatted incorrectly.";
     return true;
   }
