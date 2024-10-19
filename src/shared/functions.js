@@ -70,6 +70,15 @@ async function clean(folders) {
   );
 }
 
+async function fileExists(file) {
+  try {
+    await fs.access(file);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function hasArgs(remove, ...args) {
   const found = process.argv.slice(2).some((a) => args.includes(a));
 
@@ -96,6 +105,7 @@ module.exports = {
   measure,
   executeCommand,
   clean,
+  fileExists,
   info,
   success,
   error,

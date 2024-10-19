@@ -1,15 +1,7 @@
 const fs = require("fs/promises");
 const path = require("path");
 const semver = require("semver");
-
-async function fileExists(file) {
-  try {
-    await fs.access(file);
-    return true;
-  } catch {
-    return false;
-  }
-}
+const { fileExists } = require("../shared/functions");
 
 const windows = process.platform === "win32";
 const separator = windows ? "\\" : "/";
@@ -216,8 +208,8 @@ class Bundler {
           const paths = isDirectory
             ? extensions.map((e) => path.resolve(_path, `init.${e}`))
             : path.extname(_path)
-              ? [_path]
-              : extensions.map((e) => `${_path}.${e}`);
+            ? [_path]
+            : extensions.map((e) => `${_path}.${e}`);
 
           const files = await Promise.all(
             paths.map(async (_path) => {
@@ -265,7 +257,9 @@ class Bundler {
           const packageJSONPath =
             baseModule &&
             path.resolve(
-              `${splitPath.shift()}${isPNPM ? `node_modules${splitPath.shift()}` : ""}`,
+              `${splitPath.shift()}${
+                isPNPM ? `node_modules${splitPath.shift()}` : ""
+              }`,
               "node_modules",
               parseModuleName(baseModule),
               "package.json",

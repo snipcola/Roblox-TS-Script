@@ -10,6 +10,7 @@ const {
   measure,
   clean,
   hasArgs,
+  fileExists,
 } = require("../shared/functions");
 
 const build = require("roblox-ts/out/CLI/commands/build");
@@ -64,9 +65,15 @@ async function main(root, dev, sync, _package) {
     nodeModules: path.resolve(root, "node_modules"),
   };
 
-  const { default: yocto } = await import("yocto-spinner");
-  const spinner = yocto({ text: "Building", color: "blue" }).start();
   const darklua = await getDarklua();
+
+  if (!darklua) {
+    await error("Couldn't find 'darklua'");
+    return;
+  }
+
+  const { default: yocto } = await import("yocto-spinner");
+  const spinner = yocto().start();
 
   async function error(...args) {
     spinner.error(...args);
@@ -78,19 +85,16 @@ async function main(root, dev, sync, _package) {
   }
 
   function changeSpinner(text, color) {
-    if (text) spinner.text = text;
+    if (text) spinner.text = `${text} `;
     if (color) spinner.color = color;
-  }
-
-  if (!darklua) {
-    await error("Couldn't find 'darklua'");
-    return;
   }
 
   const elapsed = await measure(async function () {
     try {
+      changeSpinner("Building", "green");
+
       await clean(config.clean);
-      build.handler({
+      await build.handler({
         project: ".",
         rojo: config.rojoConfig,
         ...(!_package
@@ -102,6 +106,10 @@ async function main(root, dev, sync, _package) {
               noInclude: true,
             }),
       });
+
+      if (!(await fileExists(config.input))) {
+        throw Error();
+      }
     } catch {
       await error("Failed to build");
       return;
@@ -109,7 +117,7 @@ async function main(root, dev, sync, _package) {
 
     if (!_package) {
       try {
-        changeSpinner("Bundling", "yellow");
+        changeSpinner("Bundling", "blue");
         await bundler(config);
       } catch {
         await error("Failed to bundle");
@@ -117,7 +125,7 @@ async function main(root, dev, sync, _package) {
       }
 
       try {
-        changeSpinner("Moving Files", "magenta");
+        changeSpinner("Moving Files", "yellow");
         await clean(config.clean);
 
         await fs.mkdir(config.folder, { recursive: true });
@@ -131,7 +139,7 @@ async function main(root, dev, sync, _package) {
       }
 
       try {
-        changeSpinner("Minifying", "green");
+        changeSpinner("Minifying", "magenta");
 
         await minifyFile(darklua, config.output);
         await fs.cp(config.output, config.outputMin, { force: true });
