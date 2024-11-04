@@ -1,7 +1,8 @@
 import os from "os";
 import fs from "fs/promises";
 
-import path from "path";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
 import process from "process";
 
 import yocto from "yocto-spinner";
@@ -17,8 +18,7 @@ import {
 import build from "roblox-ts/out/CLI/commands/build.js";
 import bundler from "./bundler.js";
 
-const __filename = new URL(import.meta.url).pathname;
-const __dirname = path.dirname(__filename);
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 async function getDarklua() {
   const directory = path.resolve(os.homedir(), ".aftman", "bin");

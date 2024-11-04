@@ -208,8 +208,8 @@ class Bundler {
           const paths = isDirectory
             ? extensions.map((e) => path.resolve(_path, `init.${e}`))
             : path.extname(_path)
-            ? [_path]
-            : extensions.map((e) => `${_path}.${e}`);
+              ? [_path]
+              : extensions.map((e) => `${_path}.${e}`);
 
           const files = await Promise.all(
             paths.map(async (_path) => {
