@@ -1,20 +1,24 @@
-const os = require("os");
-const fs = require("fs/promises");
+import os from "os";
+import fs from "fs/promises";
 
-const path = require("path");
-const process = require("process");
+import path from "path";
+import process from "process";
 
-const { lookpath } = require("lookpath");
-const {
+import yocto from "yocto-spinner";
+import { lookpath } from "lookpath";
+import {
   executeCommand,
   measure,
   clean,
   hasArgs,
   fileExists,
-} = require("../shared/functions");
+} from "../shared/functions.js";
 
-const build = require("roblox-ts/out/CLI/commands/build");
-const bundler = require("./bundler");
+import build from "roblox-ts/out/CLI/commands/build.js";
+import bundler from "./bundler.js";
+
+const __filename = new URL(import.meta.url).pathname;
+const __dirname = path.dirname(__filename);
 
 async function getDarklua() {
   const directory = path.resolve(os.homedir(), ".aftman", "bin");
@@ -40,7 +44,7 @@ async function cleanFile(path) {
   await fs.writeFile(path, contents.replace(/(\n|\r)/g, " ").trim(), "utf8");
 }
 
-async function main(root, dev, sync, _package) {
+export default async function (root, dev, sync, _package) {
   _package = _package || hasArgs(false, "--package", "-p");
 
   const outFolder = path.resolve(root, "out");
@@ -72,7 +76,6 @@ async function main(root, dev, sync, _package) {
     return;
   }
 
-  const { default: yocto } = await import("yocto-spinner");
   const spinner = yocto().start();
 
   async function error(...args) {
@@ -159,5 +162,3 @@ async function main(root, dev, sync, _package) {
 
   spinner.success(`Built (took ${elapsed}ms)`);
 }
-
-module.exports = main;

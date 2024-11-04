@@ -1,18 +1,18 @@
-const fs = require("fs/promises");
-const process = require("process");
+import fs from "fs/promises";
+import process from "process";
 
-const { spawn } = require("child_process");
-const { blue, green, red } = require("colorette");
+import { spawn } from "child_process";
+import { blue, green, red } from "colorette";
 
-function info(message) {
+export function info(message) {
   console.log(blue(`i ${message}`));
 }
 
-function success(message) {
+export function success(message) {
   console.log(green(`√ ${message}`));
 }
 
-function error(exit, message) {
+export function error(exit, message) {
   if (message) {
     console.error(red(`× ${message}`));
   }
@@ -22,7 +22,7 @@ function error(exit, message) {
   }
 }
 
-async function measure(callback, ...args) {
+export async function measure(callback, ...args) {
   const start = performance.now();
   await callback(...args);
 
@@ -30,7 +30,7 @@ async function measure(callback, ...args) {
   return (end - start).toFixed(2);
 }
 
-function executeCommand(command, args, cwd) {
+export function executeCommand(command, args, cwd) {
   return new Promise(async function (resolve) {
     const useCMD =
       process.platform === "win32" && !command?.toLowerCase()?.endsWith(".exe");
@@ -64,13 +64,13 @@ function executeCommand(command, args, cwd) {
   });
 }
 
-async function clean(folders) {
+export async function clean(folders) {
   await Promise.all(
     folders.map((f) => fs.rm(f, { recursive: true, force: true })),
   );
 }
 
-async function fileExists(file) {
+export async function fileExists(file) {
   try {
     await fs.access(file);
     return true;
@@ -79,7 +79,7 @@ async function fileExists(file) {
   }
 }
 
-function hasArgs(remove, ...args) {
+export function hasArgs(remove, ...args) {
   const found = process.argv.slice(2).some((a) => args.includes(a));
 
   if (remove && found) {
@@ -89,27 +89,14 @@ function hasArgs(remove, ...args) {
   return found;
 }
 
-async function readJSONFile(path) {
+export async function readJSONFile(path) {
   try {
     const contents = await fs.readFile(path, "utf8");
     return JSON.parse(contents);
   } catch {}
 }
 
-async function writeJSONFile(path, json) {
+export async function writeJSONFile(path, json) {
   json = `${JSON.stringify(json, null, 2)}\n`;
   await fs.writeFile(path, json, "utf8");
 }
-
-module.exports = {
-  measure,
-  executeCommand,
-  clean,
-  fileExists,
-  info,
-  success,
-  error,
-  hasArgs,
-  readJSONFile,
-  writeJSONFile,
-};

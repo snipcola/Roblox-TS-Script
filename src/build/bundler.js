@@ -1,7 +1,7 @@
-const fs = require("fs/promises");
-const path = require("path");
-const semver = require("semver");
-const { fileExists } = require("../shared/functions");
+import fs from "fs/promises";
+import path from "path";
+import semver from "semver";
+import { fileExists } from "../shared/functions.js";
 
 const windows = process.platform === "win32";
 const separator = windows ? "\\" : "/";
@@ -521,8 +521,8 @@ class Bundler {
   }
 }
 
-module.exports = async function (config) {
+export default async function (config) {
   const bundler = new Bundler(config);
   await bundler.prepare();
   await bundler.bundle();
-};
+}

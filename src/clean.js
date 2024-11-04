@@ -1,5 +1,5 @@
-const path = require("path");
-const { measure, clean, info, success, error } = require("./shared/functions");
+import path from "path";
+import { measure, clean, info, success, error } from "./shared/functions.js";
 
 async function main(root) {
   const config = {
@@ -22,9 +22,7 @@ async function main(root) {
   }
 }
 
-async function measureMain(root) {
+export default async function (root) {
   info("Cleaning.");
   success(`Cleaned (took ${await measure(main, root)}ms).`);
 }
-
-module.exports = measureMain;

@@ -1,14 +1,14 @@
-const path = require("path");
-const prompts = require("prompts");
-const {
+import path from "path";
+import prompts from "prompts";
+import {
   readJSONFile,
   writeJSONFile,
   info,
   success,
   error,
-} = require("./shared/functions");
+} from "./shared/functions.js";
 
-async function main(root) {
+export default async function (root) {
   const config = {
     tsConfigJSON: path.resolve(root, "tsconfig.json"),
     rojoJSON: path.resolve(root, "assets", "rojo", "default.project.json"),
@@ -99,5 +99,3 @@ async function main(root) {
   if (option === "add") success(`Added scope '${scope}'.`);
   else success(`Removed scope '${scope}'.`);
 }
-
-module.exports = main;

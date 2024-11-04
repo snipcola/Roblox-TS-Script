@@ -1,11 +1,11 @@
-const os = require("os");
-const path = require("path");
+import os from "os";
+import path from "path";
 
-const { watch } = require("chokidar");
-const { executeCommand, error, hasArgs } = require("./shared/functions");
+import { watch } from "chokidar";
+import { executeCommand, error, hasArgs } from "./shared/functions.js";
 
-const { lookpath } = require("lookpath");
-const build = require("./build");
+import { lookpath } from "lookpath";
+import build from "./build/index.js";
 
 let lock = false;
 
@@ -46,7 +46,7 @@ async function syncRojo(rojoConfig) {
   await executeCommand(rojo, ["serve", rojoConfig]);
 }
 
-async function main(root) {
+export default async function (root) {
   const config = {
     folder: path.resolve(root, "src"),
     rojoConfig: path.resolve(root, "assets", "rojo", "studio"),
@@ -56,5 +56,3 @@ async function main(root) {
   watchFolder(root, config.folder);
   if (sync) syncRojo(config.rojoConfig);
 }
-
-module.exports = main;

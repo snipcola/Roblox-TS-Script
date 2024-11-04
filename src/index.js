@@ -1,10 +1,17 @@
 #!/usr/bin/env node
 
-const { hasArgs, error } = require("./shared/functions");
-const path = require("path").resolve();
+import { hasArgs, error } from "./shared/functions.js";
 
-if (hasArgs(true, "--build", "-b")) require("./build")(path);
-else if (hasArgs(true, "--dev", "-d")) require("./dev")(path);
-else if (hasArgs(true, "--clean", "-c")) require("./clean")(path);
-else if (hasArgs(true, "--scope", "-s")) require("./scope")(path);
+import path from "path";
+const _path = path.resolve();
+
+import build from "./build/index.js";
+import dev from "./dev.js";
+import clean from "./clean.js";
+import scope from "./scope.js";
+
+if (hasArgs(true, "--build", "-b")) build(_path);
+else if (hasArgs(true, "--dev", "-d")) dev(_path);
+else if (hasArgs(true, "--clean", "-c")) clean(_path);
+else if (hasArgs(true, "--scope", "-s")) scope(_path);
 else error(true, "Invalid arguments!");
