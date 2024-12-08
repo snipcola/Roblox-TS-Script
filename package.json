@@ -2,7 +2,7 @@
   "name": "roblox-ts-script",
   "author": "Snipcola",
   "description": "Dependency of projects using Create-Roblox-TS-Script.",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "keywords": [
     "roblox",
     "typescript",
@@ -38,6 +38,6 @@
     "yocto-spinner": "0.1.1"
   },
   "devDependencies": {
-    "prettier": "3.3.3"
+    "prettier": "3.4.2"
   }
 }
