@@ -2,7 +2,7 @@
   "name": "roblox-ts-script",
   "author": "Snipcola",
   "description": "Dependency of projects using Create-Roblox-TS-Script.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "keywords": [
     "roblox",
     "typescript",
@@ -26,7 +26,8 @@
     "src"
   ],
   "scripts": {
-    "format": "prettier --write \"src/**/*\""
+    "format": "prettier --write \"src/**/*\"",
+    "release": "git push origin main:release --force"
   },
   "dependencies": {
     "chokidar": "4.0.1",
