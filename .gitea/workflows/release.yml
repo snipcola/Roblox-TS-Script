@@ -19,12 +19,6 @@ jobs:
         with:
           github-server-url: ${{ env.SERVER_URL }}
 
-      - name: Setup PNPM
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9.10.0
-          run_install: true
-
       - name: Publish
         uses: JS-DevTools/npm-publish@v3
         with:
