@@ -8,6 +8,7 @@
     "remove_spaces",
     "remove_comments",
     "remove_types",
+    "remove_if_expression",
     "remove_empty_do",
     "remove_nil_declaration",
     "remove_method_definition",
