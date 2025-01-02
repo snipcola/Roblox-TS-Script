@@ -130,7 +130,7 @@ class Bundler {
 
   transformers = [
     {
-      extension: [".lua", ".luau"],
+      extension: [".luau", ".lua"],
       transform: function (name, contents) {
         contents = contents
           .split("")

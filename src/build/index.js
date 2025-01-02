@@ -53,7 +53,7 @@ export default async function (root, dev, sync, _package) {
     assetsFolder,
     "rojo",
     "studio",
-    "script.client.lua",
+    "script.client.luau",
   );
 
   const config = {
@@ -61,8 +61,8 @@ export default async function (root, dev, sync, _package) {
     folder: outFolder,
     clean: [outFolder, ...(!sync ? [rojoScript] : [])],
     input: path.resolve(outFolder, "init.luau"),
-    output: path.resolve(outFolder, "script.lua"),
-    outputMin: path.resolve(outFolder, "script.min.lua"),
+    output: path.resolve(outFolder, "script.luau"),
+    outputMin: path.resolve(outFolder, "script.min.luau"),
     outputRojo: rojoScript,
     rojoConfig: path.resolve(assetsFolder, "rojo", "default.project.json"),
     include: path.resolve(outFolder, "include"),
@@ -100,6 +100,7 @@ export default async function (root, dev, sync, _package) {
       await build.handler({
         project: ".",
         rojo: config.rojoConfig,
+        luau: true,
         ...(!_package
           ? {
               includePath: config.include,
