@@ -282,7 +282,9 @@ class Bundler {
               const _version = dependencies[moduleName];
               const _package = this.pnpmPackages.find(
                 ({ name, version }) =>
-                  name === moduleName && semver.satisfies(version, _version),
+                  name === moduleName &&
+                  (!_version ||
+                    (_version && semver.satisfies(version, _version))),
               );
 
               if (_package) {
