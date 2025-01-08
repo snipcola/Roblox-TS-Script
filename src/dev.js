@@ -24,7 +24,10 @@ function watchFolder(root, folder) {
       if (lock || !path) return;
       lock = true;
 
-      await build(root, true, sync, _package);
+      try {
+        await build(root, true, sync, _package);
+      } catch {}
+
       lock = false;
     });
   });
@@ -52,7 +55,10 @@ export default async function (root) {
     rojoConfig: path.resolve(root, "assets", "rojo", "studio"),
   };
 
-  await build(root, true, sync, _package);
+  try {
+    await build(root, true, sync, _package);
+  } catch {}
+
   watchFolder(root, config.folder);
   if (sync) syncRojo(config.rojoConfig);
 }

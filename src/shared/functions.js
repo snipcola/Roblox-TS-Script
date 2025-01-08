@@ -66,7 +66,13 @@ export function executeCommand(command, args, cwd) {
 
 export async function clean(folders) {
   await Promise.all(
-    folders.map((f) => fs.rm(f, { recursive: true, force: true })),
+    folders.map(async (f) => {
+      try {
+        await fs.rm(f, { recursive: true, force: true });
+      } catch {
+        error(false, `Failed to delete: ${f}`);
+      }
+    }),
   );
 }
 
