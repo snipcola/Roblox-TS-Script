@@ -35,7 +35,7 @@ async function minifyFile(darklua, file) {
   ]);
 
   if (!success) {
-    throw Error;
+    throw Error();
   }
 }
 
@@ -70,13 +70,12 @@ export default async function (root, dev, sync, _package) {
   };
 
   const darklua = await getDarklua();
+  const spinner = yocto().start();
 
   if (!darklua) {
     await error("Couldn't find 'darklua'");
     return;
   }
-
-  const spinner = yocto().start();
 
   async function error(...args) {
     spinner.error(...args);
