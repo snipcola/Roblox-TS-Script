@@ -2,7 +2,7 @@
   "name": "roblox-ts-script",
   "author": "Snipcola",
   "description": "Dependency of projects using Create-Roblox-TS-Script.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "keywords": [
     "roblox",
     "typescript",

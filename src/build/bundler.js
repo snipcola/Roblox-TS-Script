@@ -122,7 +122,6 @@ const stringify = new Stringify();
 class Bundler {
   config = {};
   initFiles = ["init.luau", "init.lua"];
-  pnpmPackages = [];
 
   constructor(config) {
     this.config = config;
@@ -226,12 +225,6 @@ class Bundler {
         } catch {}
       }
 
-      function parseModuleName(module) {
-        return module.startsWith("@")
-          ? module.split(separator).slice(0, 2).join(separator)
-          : module.split(separator).shift();
-      }
-
       let result = await tryGetPath(_path);
       if (result) return result;
 
@@ -242,64 +235,6 @@ class Bundler {
           .startsWith(`include${separator}node_modules${separator}`)
       ) {
         const module = args.slice(2).join(separator);
-        const moduleName = parseModuleName(module);
-
-        if (this.pnpmPackages?.find((p) => p.name === moduleName)) {
-          const splitPath = _path.split("node_modules");
-          const isPNPM =
-            splitPath[1] &&
-            splitPath[1].replace(separator, "").startsWith(`.pnpm${separator}`);
-
-          const baseModule =
-            splitPath[isPNPM + 1] &&
-            splitPath[isPNPM + 1].replace(separator, "");
-
-          const packageJSONPath =
-            baseModule &&
-            path.resolve(
-              `${splitPath.shift()}${
-                isPNPM ? `node_modules${splitPath.shift()}` : ""
-              }`,
-              "node_modules",
-              parseModuleName(baseModule),
-              "package.json",
-            );
-
-          const packageJSONExists =
-            packageJSONPath && (await fileExists(packageJSONPath));
-
-          if (packageJSONExists) {
-            try {
-              const json = JSON.parse(
-                await fs.readFile(packageJSONPath, "utf8"),
-              );
-
-              const dependencies = {
-                ...(json.dependencies || {}),
-                ...(json.devDependencies || {}),
-              };
-
-              const _version = dependencies[moduleName];
-              const _package = this.pnpmPackages.find(
-                ({ name, version }) =>
-                  name === moduleName &&
-                  (!_version ||
-                    (_version && semver.satisfies(version, _version))),
-              );
-
-              if (_package) {
-                result = await tryGetPath(
-                  path.resolve(
-                    _package.path,
-                    "node_modules",
-                    _package.name,
-                    module.split(_package.name).join("").replace(separator, ""),
-                  ),
-                );
-              }
-            } catch {}
-          }
-        }
 
         if (!result) {
           result = await tryGetPath(path.resolve(nodeModules, module));
@@ -409,13 +344,7 @@ class Bundler {
     const modules = files.map(function (file, index) {
       let _path = file.split(rootFolder).join("").replace(separator, "");
 
-      if (_path.startsWith(`node_modules${separator}.pnpm${separator}`)) {
-        _path = path.resolve(
-          include,
-          "node_modules",
-          _path.split("node_modules").pop().replace(separator, ""),
-        );
-      } else if (_path.startsWith(`node_modules${separator}`)) {
+      if (_path.startsWith(`node_modules${separator}`)) {
         _path = path.resolve(include, _path);
       } else {
         _path = file;
@@ -469,23 +398,6 @@ class Bundler {
     };
   }
 
-  async prepare() {
-    const { nodeModules } = this.config;
-    const pnpm = path.resolve(nodeModules, ".pnpm");
-
-    if ((await fileExists(pnpm)) && (await fs.stat(pnpm)).isDirectory()) {
-      this.pnpmPackages = ((await fs.readdir(pnpm)) || []).map(function (file) {
-        const _path = path.resolve(pnpm, file);
-        file = file.split("@");
-
-        const version = file.length !== 1 && file.pop();
-        const name = file.join("@").replace(/\+/g, separator);
-
-        return { path: _path, name, version };
-      });
-    }
-  }
-
   async bundle() {
     const { root, input, output } = this.config;
     const contents = await fs.readFile(input, "utf8");
@@ -525,6 +437,5 @@ class Bundler {
 
 export default async function (config) {
   const bundler = new Bundler(config);
-  await bundler.prepare();
   await bundler.bundle();
 }

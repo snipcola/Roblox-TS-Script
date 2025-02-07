@@ -8,10 +8,7 @@ async function main(root) {
       path.resolve(root, "script.luau"),
       path.resolve(root, "assets", "rojo", "studio", "script.client.luau"),
       path.resolve(root, "node_modules"),
-      path.resolve(root, "pnpm-lock.yaml"),
-      path.resolve(root, "package-lock.json"),
-      path.resolve(root, "yarn.lock"),
-      path.resolve(root, ".DS_Store"),
+      path.resolve(root, "bun.lock"),
     ],
   };
 

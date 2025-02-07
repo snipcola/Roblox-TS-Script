@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env bun
 
 import { hasArgs, error } from "./shared/functions.js";
 
