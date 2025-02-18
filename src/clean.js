@@ -8,7 +8,7 @@ async function main(root) {
       path.resolve(root, "script.luau"),
       path.resolve(root, "assets", "rojo", "studio", "script.client.luau"),
       path.resolve(root, "node_modules"),
-      path.resolve(root, "bun.lock"),
+      path.resolve(root, "package-lock.json"),
     ],
   };
 
