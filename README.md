@@ -1,6 +1,6 @@
 ## Roblox-TS-Script
 
-Dependency of projects using [Create-Roblox-TS-Script](https://git.snipcola.com/snipcola/Create-Roblox-TS-Script).
+Dependency of projects using [Create-Roblox-TS-Script](https://code.snipcola.com/snipcola/Create-Roblox-TS-Script).
 
 ## Credits
 

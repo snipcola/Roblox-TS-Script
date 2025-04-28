@@ -2,7 +2,7 @@
   "name": "roblox-ts-script",
   "author": "Snipcola",
   "description": "Dependency of projects using Create-Roblox-TS-Script.",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "keywords": [
     "roblox",
     "typescript",
@@ -15,7 +15,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://git.snipcola.com/snipcola/Roblox-TS-Script.git"
+    "url": "https://code.snipcola.com/snipcola/Roblox-TS-Script.git"
   },
   "type": "module",
   "main": "src/index.js",
@@ -35,8 +35,7 @@
     "lookpath": "1.2.3",
     "prompts": "2.4.2",
     "roblox-ts": "3.0.0",
-    "semver": "7.7.1",
-    "yocto-spinner": "0.2.1"
+    "yocto-spinner": "0.2.2"
   },
   "devDependencies": {
     "prettier": "3.5.3"

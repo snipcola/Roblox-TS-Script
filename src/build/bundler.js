@@ -1,6 +1,5 @@
 import fs from "fs/promises";
 import path from "path";
-import semver from "semver";
 import { fileExists } from "../shared/functions.js";
 
 const windows = process.platform === "win32";
